@@ -1,0 +1,23 @@
+  server:
+    servlet:
+      context-path: /content
+    port: 63040
+  #微服务配置
+  spring:
+    application:
+      name: content-api
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://47.101.53.233:3306/bs-content?serverTimezone=UTC&userUnicode=true&useSSL=false&
+      username: root
+      password: root
+  # 日志文件配置路径
+  logging:
+    config: classpath:log4j2-dev.xml
+
+  swagger:
+    title: "专利可视化管理系统"
+    description: "对专利信息进行管理"
+    base-package: com.bs.content
+    enabled: true
+    version: 1.0.0
