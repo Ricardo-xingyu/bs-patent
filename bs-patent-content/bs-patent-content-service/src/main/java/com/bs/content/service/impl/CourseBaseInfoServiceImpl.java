@@ -5,13 +5,20 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bs.base.model.PageParams;
 import com.bs.base.model.PageResult;
 import com.bs.content.mapper.CourseBaseMapper;
+import com.bs.content.mapper.CourseCategoryMapper;
+import com.bs.content.model.dto.AddCourseDto;
+import com.bs.content.model.dto.CourseBaseInfoDto;
 import com.bs.content.model.dto.QueryCourseParamsDto;
 import com.bs.content.model.po.CourseBase;
+import com.bs.content.model.po.CourseCategory;
 import com.bs.content.service.CourseBaseInfoService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -54,6 +61,73 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 
 
     }
+
+    @Transactional
+    @Override
+    public CourseBaseInfoDto createCourseBase(Long companyId, AddCourseDto dto) {
+
+        //合法性校验
+        if (StringUtils.isBlank(dto.getName())) {
+            throw new RuntimeException("课程名称为空");
+        }
+
+        if (StringUtils.isBlank(dto.getMt())) {
+            throw new RuntimeException("课程分类为空");
+        }
+
+        if (StringUtils.isBlank(dto.getSt())) {
+            throw new RuntimeException("课程分类为空");
+        }
+        //新增对象
+        CourseBase courseBaseNew = new CourseBase();
+        //将填写的课程信息赋值给新增对象
+        BeanUtils.copyProperties(dto,courseBaseNew);
+        //设置审核状态
+        courseBaseNew.setAuditStatus("202002");
+        //设置发布状态
+        courseBaseNew.setStatus("203001");
+        //机构id
+        courseBaseNew.setCompanyId(companyId);
+        //添加时间
+        courseBaseNew.setCreateDate(LocalDateTime.now());
+        //插入课程基本信息表
+        int insert = courseBaseMapper.insert(courseBaseNew);
+        if(insert<=0){
+            throw new RuntimeException("新增课程基本信息失败");
+        }
+        Long courseId = courseBaseNew.getId();
+        return getCourseBaseInfo(courseId);
+
+    }
+
+
+    @Autowired
+    CourseCategoryMapper courseCategoryMapper;
+    //根据课程id查询课程基本信息，包括基本信息和营销信息
+    public CourseBaseInfoDto getCourseBaseInfo(long courseId){
+
+        CourseBase courseBase = courseBaseMapper.selectById(courseId);
+        if(courseBase == null){
+            return null;
+        }
+//        CourseMarket courseMarket = courseMarketMapper.selectById(courseId);
+        CourseBaseInfoDto courseBaseInfoDto = new CourseBaseInfoDto();
+        BeanUtils.copyProperties(courseBase,courseBaseInfoDto);
+//        if(courseMarket != null){
+//            BeanUtils.copyProperties(courseMarket,courseBaseInfoDto);
+//        }
+
+        //查询分类名称
+        CourseCategory courseCategoryBySt = courseCategoryMapper.selectById(courseBase.getSt());
+        courseBaseInfoDto.setStName(courseCategoryBySt.getName());
+        CourseCategory courseCategoryByMt = courseCategoryMapper.selectById(courseBase.getMt());
+        courseBaseInfoDto.setMtName(courseCategoryByMt.getName());
+
+        return courseBaseInfoDto;
+
+    }
+
+
 
 
 }
