@@ -2,12 +2,14 @@ package com.bs.content.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bs.base.exception.BSException;
 import com.bs.base.model.PageParams;
 import com.bs.base.model.PageResult;
 import com.bs.content.mapper.CourseBaseMapper;
 import com.bs.content.mapper.CourseCategoryMapper;
 import com.bs.content.model.dto.AddCourseDto;
 import com.bs.content.model.dto.CourseBaseInfoDto;
+import com.bs.content.model.dto.EditCourseDto;
 import com.bs.content.model.dto.QueryCourseParamsDto;
 import com.bs.content.model.po.CourseBase;
 import com.bs.content.model.po.CourseCategory;
@@ -68,16 +70,17 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 
         //合法性校验
         if (StringUtils.isBlank(dto.getName())) {
-            throw new RuntimeException("课程名称为空");
+            BSException.cast("课程名称为空");
         }
 
         if (StringUtils.isBlank(dto.getMt())) {
-            throw new RuntimeException("课程分类为空");
+            BSException.cast("课程分类为空");
         }
 
         if (StringUtils.isBlank(dto.getSt())) {
-            throw new RuntimeException("课程分类为空");
+            BSException.cast("课程分类为空");
         }
+
         //新增对象
         CourseBase courseBaseNew = new CourseBase();
         //将填写的课程信息赋值给新增对象
@@ -127,6 +130,44 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 
     }
 
+    /**
+     * @param companyId 机构id
+     * @param dto       课程信息
+     * @return com.xuecheng.content.model.dto.CourseBaseInfoDto
+     * @description 修改课程信息
+     * @author Mr.M
+     * @date 2022/9/8 21:04
+     */
+
+
+    @Transactional
+    @Override
+    public CourseBaseInfoDto updateCourseBase(Long companyId, EditCourseDto dto) {
+
+        //课程id
+        Long courseId = dto.getId();
+        CourseBase courseBase = courseBaseMapper.selectById(courseId);
+        if(courseBase==null){
+            BSException.cast("课程不存在");
+        }
+
+        //校验本机构只能修改本机构的课程
+        if(!courseBase.getCompanyId().equals(companyId)){
+            BSException.cast("本机构只能修改本机构的课程");
+        }
+
+        //封装基本信息的数据
+        BeanUtils.copyProperties(dto,courseBase);
+        courseBase.setChangeDate(LocalDateTime.now());
+
+        //更新课程基本信息
+        int i = courseBaseMapper.updateById(courseBase);
+
+        //查询课程信息
+        CourseBaseInfoDto courseBaseInfo = this.getCourseBaseInfo(courseId);
+        return courseBaseInfo;
+
+    }
 
 
 
