@@ -14,6 +14,7 @@ import com.bs.content.model.dto.QueryCourseParamsDto;
 import com.bs.content.model.po.CourseBase;
 import com.bs.content.model.po.CourseCategory;
 import com.bs.content.service.CourseBaseInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

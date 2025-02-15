@@ -3,38 +3,46 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>bs-patent-content</artifactId>
+        <artifactId>bs-patent-media</artifactId>
         <groupId>com.bs</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bs-patent-content-service</artifactId>
+    <artifactId>bs-patent-media-service</artifactId>
+    <name>bs-patent-media-service</name>
+    <description>bs-patent-media-service</description>
 
     <dependencies>
         <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.bs</groupId>
-            <artifactId>bs-patent-content-model</artifactId>
+            <artifactId>bs-patent-media-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <!-- MySQL 驱动 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-
 
         <!-- mybatis plus的依赖 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-context</artifactId>
         </dependency>
         <!-- Spring Boot 集成 Junit -->
         <dependency>
@@ -59,6 +67,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+
 
     </dependencies>
 

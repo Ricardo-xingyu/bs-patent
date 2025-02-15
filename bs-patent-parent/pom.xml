@@ -64,6 +64,15 @@
                 <artifactId>lombok</artifactId>
                 <version>${org.projectlombok.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
             <!-- mapstruct 代码生成器，简化java bean之间的映射 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>

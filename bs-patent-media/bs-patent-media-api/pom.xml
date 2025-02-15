@@ -3,30 +3,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>bs-patent-system</artifactId>
+        <artifactId>bs-patent-media</artifactId>
         <groupId>com.bs</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bs-patent-system-api</artifactId>
-    <name>bs-patent-system-api</name>
-    <description>bs-patent-system-api</description>
+    <artifactId>bs-patent-media-api</artifactId>
+    <name>bs-patent-media-api</name>
+    <description>bs-patent-media-api</description>
 
     <dependencies>
-        <dependency>
-            <groupId>com.bs</groupId>
-            <artifactId>bs-patent-system-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bs</groupId>
-            <artifactId>bs-patent-system-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.bs</groupId>
+            <artifactId>bs-patent-media-model</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bs</groupId>
+            <artifactId>bs-patent-media-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <!--cloud的基础环境包-->
         <dependency>
@@ -39,6 +42,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>

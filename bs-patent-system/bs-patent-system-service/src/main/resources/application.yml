@@ -1,6 +1,12 @@
 spring:
   application:
     name: system-service
+  cloud:
+    nacos:
+      server-addr: 47.101.53.233:8848
+      discovery:
+        namespace: dev
+        group: bs-patent-project
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.101.53.233:3306/xcplus_system?serverTimezone=UTC&userUnicode=true&useSSL=false&
@@ -9,5 +15,9 @@ spring:
 # 日志文件配置路径
 logging:
   config: classpath:log4j2-dev.xml
+
+#微服务配置
+
+
 
 
