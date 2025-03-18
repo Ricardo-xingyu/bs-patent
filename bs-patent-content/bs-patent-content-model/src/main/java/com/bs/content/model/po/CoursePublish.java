@@ -71,10 +71,6 @@ public class CoursePublish implements Serializable {
      */
     private String stName;
 
-    /**
-     * 专利等级
-     */
-    private String grade;
 
     /**
      * 专利图片
@@ -86,15 +82,7 @@ public class CoursePublish implements Serializable {
      */
     private String description;
 
-    /**
-     * 课程营销信息，json格式
-     */
-    private String market;
 
-    /**
-     * 作者信息，json格式
-     */
-    private String teachers;
 
     /**
      * 发布时间
@@ -121,6 +109,21 @@ public class CoursePublish implements Serializable {
      * 备注
      */
     private String remark;
+
+    /**
+     * 申请人
+     */
+    private String applicant;
+
+    /**
+     * 发明人
+     */
+    private String inventor;
+
+    /**
+     * 国家
+     */
+    private String country;
 
 
 }

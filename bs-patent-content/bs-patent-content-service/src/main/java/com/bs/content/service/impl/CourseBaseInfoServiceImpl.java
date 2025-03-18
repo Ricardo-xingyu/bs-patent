@@ -25,30 +25,33 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @description 课程信息管理业务接口实现类
+ * @description 专利信息管理业务接口实现类
  * @author Mr.M
  * @date 2022/9/6 21:45
  * @version 1.0
  */
 @Service
-public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
+public class  CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 
 
     @Autowired
     CourseBaseMapper courseBaseMapper;
 
     @Override
-    public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
+    public PageResult<CourseBase> queryCourseBaseList(String user, PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
 
 
         //构建查询条件对象
         LambdaQueryWrapper<CourseBase> queryWrapper = new LambdaQueryWrapper<>();
-        //构建查询条件，根据课程名称查询
+        //构建查询条件，根据专利名称查询
         queryWrapper.like(StringUtils.isNotEmpty(queryCourseParamsDto.getCourseName()),CourseBase::getName,queryCourseParamsDto.getCourseName());
-        //构建查询条件，根据课程审核状态查询
+        //构建查询条件，根据专利审核状态查询
         queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamsDto.getAuditStatus()),CourseBase::getAuditStatus,queryCourseParamsDto.getAuditStatus());
-//构建查询条件，根据课程发布状态查询
-//todo:根据课程发布状态查询
+//构建查询条件，根据专利发布状态查询
+//todo:根据专利发布状态查询
+        //根据用户名称查询
+        queryWrapper.eq(CourseBase::getCreatePeople,user);
+
 
         //分页对象
         Page<CourseBase> page = new Page<>(pageParams.getPageNo(), pageParams.getPageSize());
@@ -71,20 +74,20 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 
         //合法性校验
         if (StringUtils.isBlank(dto.getName())) {
-            BSException.cast("课程名称为空");
+            BSException.cast("专利名称为空");
         }
 
         if (StringUtils.isBlank(dto.getMt())) {
-            BSException.cast("课程分类为空");
+            BSException.cast("专利分类为空");
         }
 
         if (StringUtils.isBlank(dto.getSt())) {
-            BSException.cast("课程分类为空");
+            BSException.cast("专利分类为空");
         }
 
         //新增对象
         CourseBase courseBaseNew = new CourseBase();
-        //将填写的课程信息赋值给新增对象
+        //将填写的专利信息赋值给新增对象
         BeanUtils.copyProperties(dto,courseBaseNew);
         //设置审核状态
         courseBaseNew.setAuditStatus("202002");
@@ -94,10 +97,12 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
         courseBaseNew.setCompanyId(companyId);
         //添加时间
         courseBaseNew.setCreateDate(LocalDateTime.now());
-        //插入课程基本信息表
+        //添加创建人
+        courseBaseNew.setCreatePeople(dto.getApplicant());
+        //插入专利基本信息表
         int insert = courseBaseMapper.insert(courseBaseNew);
         if(insert<=0){
-            throw new RuntimeException("新增课程基本信息失败");
+            throw new RuntimeException("新增专利基本信息失败");
         }
         Long courseId = courseBaseNew.getId();
         return getCourseBaseInfo(courseId);
@@ -107,7 +112,7 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 
     @Autowired
     CourseCategoryMapper courseCategoryMapper;
-    //根据课程id查询课程基本信息，包括基本信息和营销信息
+    //根据专利id查询专利基本信息，包括基本信息和营销信息
     public CourseBaseInfoDto getCourseBaseInfo(long courseId){
 
         CourseBase courseBase = courseBaseMapper.selectById(courseId);
@@ -117,9 +122,6 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 //        CourseMarket courseMarket = courseMarketMapper.selectById(courseId);
         CourseBaseInfoDto courseBaseInfoDto = new CourseBaseInfoDto();
         BeanUtils.copyProperties(courseBase,courseBaseInfoDto);
-//        if(courseMarket != null){
-//            BeanUtils.copyProperties(courseMarket,courseBaseInfoDto);
-//        }
 
         //查询分类名称
         CourseCategory courseCategoryBySt = courseCategoryMapper.selectById(courseBase.getSt());
@@ -133,9 +135,9 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
 
     /**
      * @param companyId 机构id
-     * @param dto       课程信息
-     * @return com.xuecheng.content.model.dto.CourseBaseInfoDto
-     * @description 修改课程信息
+     * @param dto       专利信息
+     * @return com.bs.content.model.dto.CourseBaseInfoDto
+     * @description 修改专利信息
      * @author Mr.M
      * @date 2022/9/8 21:04
      */
@@ -145,26 +147,26 @@ public class CourseBaseInfoServiceImpl  implements CourseBaseInfoService {
     @Override
     public CourseBaseInfoDto updateCourseBase(Long companyId, EditCourseDto dto) {
 
-        //课程id
+        //专利id
         Long courseId = dto.getId();
         CourseBase courseBase = courseBaseMapper.selectById(courseId);
         if(courseBase==null){
-            BSException.cast("课程不存在");
+            BSException.cast("专利不存在");
         }
 
-        //校验本机构只能修改本机构的课程
+        //校验本机构只能修改本机构的专利
         if(!courseBase.getCompanyId().equals(companyId)){
-            BSException.cast("本机构只能修改本机构的课程");
+            BSException.cast("本机构只能修改本机构的专利");
         }
 
         //封装基本信息的数据
         BeanUtils.copyProperties(dto,courseBase);
         courseBase.setChangeDate(LocalDateTime.now());
 
-        //更新课程基本信息
+        //更新专利基本信息
         int i = courseBaseMapper.updateById(courseBase);
 
-        //查询课程信息
+        //查询专利信息
         CourseBaseInfoDto courseBaseInfo = this.getCourseBaseInfo(courseId);
         return courseBaseInfo;
 

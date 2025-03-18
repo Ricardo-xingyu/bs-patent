@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 /**
- * @description 添加课程dto
+ * @description 添加专利dto
  * @author Mr.M
  * @date 2022/9/7 17:40
  * @version 1.0
@@ -40,6 +40,23 @@ public class AddCourseDto {
 
  @ApiModelProperty(value = "专利图片", required = true)
  private String pic;
+ /**
+  * 申请人
+  */
+ @ApiModelProperty(value = "申请人", required = true)
+ private String applicant;
+
+ /**
+  * 发明人
+  */
+ @ApiModelProperty(value = "发明人", required = true)
+ private String inventor;
+
+ /**
+  * 国家
+  */
+ @ApiModelProperty(value = "国家", required = true)
+ private String country;
 
 
 // @ApiModelProperty(value = "qq")

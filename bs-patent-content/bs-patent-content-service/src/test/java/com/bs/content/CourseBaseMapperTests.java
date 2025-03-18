@@ -36,9 +36,9 @@ class CourseBaseMapperTests {
         queryCourseParamsDto.setPublishStatus("203001");
 
         //拼接查询条件
-        //根据课程名称模糊查询  name like '%名称%'
+        //根据专利名称模糊查询  name like '%名称%'
         queryWrapper.like(StringUtils.isNotEmpty(queryCourseParamsDto.getCourseName()),CourseBase::getName,queryCourseParamsDto.getCourseName());
-        //根据课程审核状态
+        //根据专利审核状态
         queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamsDto.getAuditStatus()),CourseBase::getAuditStatus,queryCourseParamsDto.getAuditStatus());
 
 

@@ -1,4 +1,4 @@
-package com.xuecheng.content.model.po;
+package com.bs.content.model.po;
 
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -86,7 +86,7 @@ public class CoursePublish implements Serializable {
     private String description;
 
     /**
-     * 课程营销信息，json格式
+     * 专利营销信息，json格式
      */
     private String market;
 

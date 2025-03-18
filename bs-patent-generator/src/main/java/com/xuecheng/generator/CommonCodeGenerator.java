@@ -1,4 +1,4 @@
-package com.xuecheng.generator;
+package com.bs.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -38,7 +38,7 @@ public class CommonCodeGenerator {
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
 		gc.setFileOverride(true);
-		gc.setOutputDir(System.getProperty("user.dir") + "/xuecheng-plus-generator/src/main/java");
+		gc.setOutputDir(System.getProperty("user.dir") + "/bs-plus-generator/src/main/java");
 		gc.setAuthor("itcast");
 		gc.setOpen(false);
 		gc.setSwagger2(false);
@@ -65,7 +65,7 @@ public class CommonCodeGenerator {
 		// 包配置
 		PackageConfig pc = new PackageConfig();
 		pc.setModuleName(SERVICE_NAME);
-		pc.setParent("com.xuecheng");
+		pc.setParent("com.bs");
 
 		pc.setServiceImpl("service.impl");
 		pc.setXml("mapper");

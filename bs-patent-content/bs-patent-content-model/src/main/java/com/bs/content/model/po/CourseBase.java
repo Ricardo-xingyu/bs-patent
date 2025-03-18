@@ -93,9 +93,24 @@ public class CourseBase implements Serializable {
     private String auditStatus;
 
     /**
-     * 课程发布状态 未发布  已发布 下线
+     * 专利发布状态 未发布  已发布 下线
      */
     private String status;
+
+    /**
+     * 申请人
+     */
+    private String applicant;
+
+    /**
+     * 发明人
+     */
+    private String inventor;
+
+    /**
+     * 国家
+     */
+    private String country;
 
 
 }

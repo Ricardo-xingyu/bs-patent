@@ -8,9 +8,12 @@ import com.bs.content.model.dto.EditCourseDto;
 import com.bs.content.model.dto.QueryCourseParamsDto;
 import com.bs.content.model.po.CourseBase;
 import com.bs.content.service.CourseBaseInfoService;
+import com.bs.content.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +32,15 @@ public class CourseBaseInfoController {
 
 
     @ApiOperation("专利查询接口")
+    @PreAuthorize("hasAuthority('xc_teachmanager_course_list')")
     @PostMapping("/course/list")
     public PageResult<CourseBase> list(PageParams pageParams, @RequestBody(required = false) QueryCourseParamsDto queryCourseParams){
+        //取出用户身份
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        //机构id
+        String userName = user.getUsername();
 
-        PageResult<CourseBase> courseBasePageResult = courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParams);
+        PageResult<CourseBase> courseBasePageResult = courseBaseInfoService.queryCourseBaseList(userName, pageParams, queryCourseParams);
 
         return courseBasePageResult;
 
@@ -50,6 +58,10 @@ public class CourseBaseInfoController {
     @ApiOperation("根据id查询专利基础信息")
     @GetMapping("/course/{courseId}")
     public CourseBaseInfoDto getCourseBaseById(@PathVariable Long courseId){
+        //取出当前用户身份
+        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        System.out.println(user);
         return courseBaseInfoService.getCourseBaseInfo(courseId);
     }
 

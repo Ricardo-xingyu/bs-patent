@@ -20,7 +20,7 @@ public interface MediaFileService {
   * @description 媒资文件查询方法
   * @param pageParams 分页参数
   * @param queryMediaParamsDto 查询条件
-  * @return com.xuecheng.base.model.PageResult<po.model.com.bs.media.MediaFiles>
+  * @return com.bs.base.model.PageResult<po.model.com.bs.media.MediaFiles>
   * @author Mr.M
   * @date 2022/9/10 8:57
  */

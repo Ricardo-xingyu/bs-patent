@@ -1,4 +1,4 @@
-package com.xuecheng.generator;
+package com.bs.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -50,7 +50,7 @@ public class ContentCodeGenerator {
 		GlobalConfig gc = new GlobalConfig();
 		gc.setFileOverride(true);
 		//生成路径
-		gc.setOutputDir(System.getProperty("user.dir") + "/xuecheng-plus-generator/src/main/java");
+		gc.setOutputDir(System.getProperty("user.dir") + "/bs-plus-generator/src/main/java");
 		gc.setAuthor("chino");
 		gc.setOpen(false);
 		gc.setSwagger2(false);

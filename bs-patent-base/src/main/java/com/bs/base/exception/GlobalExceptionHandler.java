@@ -27,8 +27,16 @@ public class GlobalExceptionHandler {
    @ExceptionHandler(BSException.class)
    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
    public RestErrorResponse customException(BSException e) {
-      log.error("【系统异常】{}",e.getErrMessage(),e);
-      return new RestErrorResponse(e.getErrMessage());
+      log.error("【系统异常】{}",e.getMessage(),e);
+      e.printStackTrace();
+      if(e.getMessage().equals("不允许访问")){
+         return new RestErrorResponse("没有操作此功能的权限");
+      }
+      if(e.getMessage().equals("提交失败，请上传专利图片")){
+         return new RestErrorResponse("提交失败，请上传专利图片");
+      }
+      return new RestErrorResponse(CommonError.UNKOWN_ERROR.getErrMessage());
+
 
    }
 

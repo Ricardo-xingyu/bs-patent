@@ -1,4 +1,4 @@
-package com.xuecheng.content.model.po;
+package com.bs.content.model.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -96,7 +96,7 @@ public class CourseBase implements Serializable {
     private String auditStatus;
 
     /**
-     * 课程发布状态 未发布  已发布 下线
+     * 专利发布状态 未发布  已发布 下线
      */
     private String status;
 

@@ -1,8 +1,8 @@
-package com.xuecheng.content.service.impl;
+package com.bs.content.service.impl;
 
-import com.xuecheng.content.model.po.CourseBase;
-import com.xuecheng.content.mapper.CourseBaseMapper;
-import com.xuecheng.content.service.CourseBaseService;
+import com.bs.content.model.po.CourseBase;
+import com.bs.content.mapper.CourseBaseMapper;
+import com.bs.content.service.CourseBaseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

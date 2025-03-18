@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @description 课程分类树型结点dto
+ * @description 专利分类树型结点dto
  * @author Mr.M
  * @date 2022/9/7 15:16
  * @version 1.0
